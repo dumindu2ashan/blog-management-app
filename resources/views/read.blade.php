@@ -405,7 +405,7 @@
     @if (Route::has('login'))
         <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
             @auth
-                <a href="{{ url('/blogs') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
+                <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Blogs</a>
             @else
                 <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
@@ -418,12 +418,11 @@
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-            <h1>Capricon Blogs</h1>
+            <h1>{{$blog->title}}</h1>
         </div>
 
         <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-            <div class="grid grid-cols-1 md:grid-cols-2">
-                @forelse($blogs as $blog)
+            <div class="grid grid-cols-1 md:grid-cols-1">
                     <div class="p-6">
                         <div class="flex items-center">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -431,31 +430,22 @@
                                 <path
                                     d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="{{url('blog/'.$blog->id)}}"
-                                                                                 class="underline text-gray-900 dark:text-white">{{$blog->title}}</a>
+                            <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs"
+                                                                                 class="underline text-gray-900 dark:text-white"></a>
                             </div>
                         </div>
 
                         <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                {!! \Illuminate\Support\Str::limit($blog->content, 250) !!}
-                                @if (strlen(strip_tags($blog->content)) > 250)
-                                    <a href="{{ url('blog/'.$blog->id) }}" class="btn btn-info btn-sm">Read More</a>
-                                @endif
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-md">
+                                {!! $blog->content !!}
                             </div>
                         </div>
                         <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-md">
                                 Author: {{ $blog->user->name }}
                             </div>
                         </div>
                     </div>
-                @empty
-                    No blogs.
-                @endforelse
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2">
-            {{$blogs->links()}}
             </div>
         </div>
     </div>

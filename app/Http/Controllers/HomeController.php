@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\BlogInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,9 +12,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(BlogInterface $blog)
     {
-        $this->middleware('auth');
+        $this->blog = $blog;
     }
 
     /**
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $blogs = $this->blog->getPagination();
+        return view('welcome',compact('blogs'));
+    }
+
+    public function readBlog($id){
+        $blog = $this->blog->findById($id);
+        return view('read',compact('blog'));
     }
 }
